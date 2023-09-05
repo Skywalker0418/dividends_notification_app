@@ -31,8 +31,14 @@ const Dashboard = () => {
       }
       async function getData() {
         // const company_data = await getLocalCsvData("/data/company_data.csv")
-        const rows = await getLocalCsvData("/data/data.csv")
-
+        // const rows = await getLocalCsvData("/data/data.csv")
+        const response = await fetch("/data/data.csv");
+        const reader = response.body.getReader();
+        const result = await reader.read(); // raw array
+        const decoder = new TextDecoder("utf-8");
+        const csv = decoder.decode(result.value); // the csv text
+        const results = Papa.parse(csv, { header: true }); // object with { data, errors, meta }
+        const rows = results.data;
         var currentdate = new Date(); 
         // Upcoming records filter
         var upcomingCsvData = rows.filter((row)=>{
