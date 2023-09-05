@@ -51,7 +51,7 @@ const Dashboard = () => {
           }
           setUpcomingData(upcomingCsvData);
           setParsedCsvData(rows);
-          }, 1000);
+          }, 3000);
         return () => clearTimeout(timer);         
       }
       getData();
