@@ -4,8 +4,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Footer from "./component/Footer/Footer";
 import {
   Routes,
-  Route,
-  Outlet
+  Route
 } from "react-router-dom";
 
 export default function App() {
