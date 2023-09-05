@@ -45,7 +45,7 @@ const Dashboard = () => {
         for (var i = 0; i < upcomingCsvData.length; i++) {
           const symbol = upcomingCsvData[i].symbol
           const company_info = company_data.find(company => company.companySymbol === symbol)
-          console.log(company_info)
+          console.log(symbol, company_info)
           upcomingCsvData[i].company_url = company_info.companyUrl;
         }
         setUpcomingData(upcomingCsvData);
