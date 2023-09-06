@@ -9,15 +9,15 @@ import {
 
 export default function App() {
   return (
-    <div className="relative min-h-[100vh] w-screen p-8">
-    <Title />
+    <div className="relative min-h-[100vh] w-screen container mx-auto">
+      <Title />
 
-    <Routes>
-      <Route path="/" element={<Dashboard />} />
-    </Routes> 
-    
-    <Footer/>
-  </div>  
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+      </Routes> 
+      
+      <Footer/>
+    </div>  
       
   );
 }
