@@ -32,31 +32,43 @@ const Dashboard = () => {
       async function getData() {
         // const company_data = await getLocalCsvData("/data/company_data.csv")
         // const rows = await getLocalCsvData("/data/data.csv")
-        const response = await fetch("/data/data.csv");
-        const reader = response.body.getReader();
-        const result = await reader.read(); // raw array
-        const decoder = new TextDecoder("utf-8");
-        const csv = decoder.decode(result.value); // the csv text
-        const results = Papa.parse(csv, { header: true }); // object with { data, errors, meta }
-        const rows = results.data;
-        var currentdate = new Date(); 
-        // Upcoming records filter
-        var upcomingCsvData = rows.filter((row)=>{
-          // console.log(row)
-          if(!!!row.distribution_date) return false;
-          var date_parts = row.distribution_date.split('/')
-          var d = new Date(+date_parts[2], date_parts[1] - 1, +date_parts[0]);
-          return d.getTime() > currentdate.getTime();
-        })
-        // console.log(company_data)
-        // for (var i = 0; i < upcomingCsvData.length; i++) {
-        //   const symbol = upcomingCsvData[i].symbol
-        //   const company_info = company_data.find(company => company.companySymbol === symbol)
-        //   console.log(symbol, company_info)
-        //   upcomingCsvData[i].company_url = company_info.companyUrl;
-        // }
-        setUpcomingData(upcomingCsvData);
-        setParsedCsvData(rows);      
+        // const response = await fetch("/data/data.csv");
+        // const reader = response.body.getReader();
+        // const result = await reader.read(); // raw array
+        // const decoder = new TextDecoder("utf-8");
+        // const csv = decoder.decode(result.value); // the csv text
+        // const results = Papa.parse(csv, { header: true }); // object with { data, errors, meta }
+        // const rows = results.data;
+
+        Papa.parse("/data/data.csv", {
+          header: true,
+          download: true,
+          dynamicTyping: true,
+          complete: function(results) {
+            console.log(results)
+            const rows = results.data;
+            var currentdate = new Date(); 
+            // Upcoming records filter
+            var upcomingCsvData = rows.filter((row)=>{
+              // console.log(row)
+              if(!!!row.distribution_date) return false;
+              var date_parts = row.distribution_date.split('/')
+              var d = new Date(+date_parts[2], date_parts[1] - 1, +date_parts[0]);
+              return d.getTime() > currentdate.getTime();
+            })
+            // console.log(company_data)
+            // for (var i = 0; i < upcomingCsvData.length; i++) {
+            //   const symbol = upcomingCsvData[i].symbol
+            //   const company_info = company_data.find(company => company.companySymbol === symbol)
+            //   console.log(symbol, company_info)
+            //   upcomingCsvData[i].company_url = company_info.companyUrl;
+            // }
+            setUpcomingData(upcomingCsvData);
+            setParsedCsvData(rows);  
+          }
+        });
+
+            
       }
       getData();
   }, []);
